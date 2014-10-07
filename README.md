@@ -10,6 +10,10 @@ Or :
 
 `(ns my-proj (:require [mr-clj-general.core :refer :all])
 
+## Releases
+
+Current [0.0.1]
+
 ## License
 
 Copyright © 2014 
