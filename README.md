@@ -4,11 +4,11 @@ My clojure genral function
 
 ## Usage
 
-`(use 'mr-clj-general.core)
+```(use 'mr-clj-general.core)```
 
 Or :
 
-`(ns my-proj (:require [mr-clj-general.core :refer :all])
+```(ns my-proj (:require [mr-clj-general.core :refer :all])```
 
 ## Releases
 
