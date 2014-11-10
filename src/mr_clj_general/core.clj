@@ -1,8 +1,54 @@
 (ns mr-clj-general.core
-  (:require [aprint.core :refer :all] 
+  (:require [aprint.core :refer :all]
             [clojure.tools.logging :as log]))
 
-(defn aprint aprint.core/aprint)
+(def apr aprint.core/aprint)
+
+(defn #^{:tested? false
+         :java-doc-url "https://docs.oracle.com/javase/7/docs/api/java/util/UUID.html#randomUUID()"}
+  new-uuid []
+  "Retrieve a type 4 (pseudo randomly generated) UUID. The UUID is generated using a cryptographically strong pseudo random number generator."
+  (str (java.util.UUID/randomUUID)))
+
+(defn #^{:tested? false}
+  arg-count [f]
+  {:pre [(instance? clojure.lang.AFunction f)]}
+  (-> f class .getDeclaredMethods first .getParameterTypes alength))
+
+(defn
+  #^{:tested? false}
+  map-fn-to-map [f m]
+  {:pre [(map? m)
+         (and
+           (instance? clojure.lang.AFunction f)
+           (= 1 (arg-count f)))]}
+  (zipmap (map first m) (map f (map second m))))
+
+
+;(defmacro map-macro-to-map [f m]
+;{:pre
+;[(map? m)
+;(and
+;(instance? clojure.lang.AFunction f)
+;(.getParameterTypes
+;(alength
+;(.getDeclaredMethods (class f)))))]}
+;(zipmap (map first m) (map f (map second m))))
+
+(defn hexadecimalize #^{:tested? false}
+  [byte-arr]
+  (string/lower-case (apply str (map #(format "%02X" %) byte-arr))))
+
+(defmacro #^{:tested? false} defhandler
+  "A macro to define handler for compojure that match parameters automatically."
+  (comment
+    (defhandler signup [username password])
+    (defroutes app-routes
+      (POST "/signup" [] signup)))
+  [name args & body]
+  `(defn ~name [req#]
+     (let [{:keys ~args :or {~'req req#}} (:params req#)]
+       ~@body)))
 
 (defn modify-keys
   "Modify keys of map , convert them using function f"
