@@ -4,6 +4,12 @@
 
 (def apr aprint.core/aprint)
 
+(defn now-timestamp []
+  (quot (System/currentTimeMillis) 1000))
+
+(defn node-instant []
+  (java.util.Date.))
+
 (defn #^{:tested? false
          :java-doc-url "https://docs.oracle.com/javase/7/docs/api/java/util/UUID.html#randomUUID()"}
   new-uuid []
