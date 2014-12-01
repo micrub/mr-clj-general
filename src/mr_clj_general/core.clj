@@ -2,6 +2,22 @@
   (:require [aprint.core :refer :all]
             [clojure.tools.logging :as log]))
 
+(defmacro def-
+  "Private var definition macro"
+  [item value]
+    `(def ^{:private true} ~item ~value))
+
+(defmacro #^{:tested? false} defhandler
+  "A macro to define handler for compojure that match parameters automatically."
+  (comment
+    (defhandler signup [username password])
+    (defroutes app-routes
+      (POST "/signup" [] signup)))
+  [name args & body]
+  `(defn ~name [req#]
+     (let [{:keys ~args :or {~'req req#}} (:params req#)]
+       ~@body)))
+
 (def apr aprint.core/aprint)
 
 (defn now-timestamp []
@@ -45,16 +61,6 @@
   [byte-arr]
   (string/lower-case (apply str (map #(format "%02X" %) byte-arr))))
 
-(defmacro #^{:tested? false} defhandler
-  "A macro to define handler for compojure that match parameters automatically."
-  (comment
-    (defhandler signup [username password])
-    (defroutes app-routes
-      (POST "/signup" [] signup)))
-  [name args & body]
-  `(defn ~name [req#]
-     (let [{:keys ~args :or {~'req req#}} (:params req#)]
-       ~@body)))
 
 (defn modify-keys
   "Modify keys of map , convert them using function f"
