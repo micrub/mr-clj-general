@@ -116,3 +116,7 @@
   [values v]
   (map first (map first (map (partial find-position v) values))))
 
+(def contains?<-in-string [string needle]
+  "Check if string contains other needle string
+   http://stackoverflow.com/questions/26386766/check-if-string-contains-substring-in-clojure"
+  (.contains string needle))
