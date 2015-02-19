@@ -1,14 +1,14 @@
 # mr-clj-general
 
-My clojure genral function
+My clojure general usage functions
 
 ## Usage
 
-`(use 'mr-clj-general.core)
+```(use 'mr-clj-general.core)```
 
 Or :
 
-`(ns my-proj (:require [mr-clj-general.core :refer :all])
+```(ns my-proj (:require [mr-clj-general.core :refer :all])```
 
 ## Releases
 
