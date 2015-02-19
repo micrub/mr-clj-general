@@ -1,6 +1,6 @@
 # mr-clj-general
 
-My clojure genral function
+My clojure general usage functions
 
 ## Usage
 
