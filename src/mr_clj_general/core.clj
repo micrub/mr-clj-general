@@ -2,6 +2,14 @@
   (:require [aprint.core :refer :all]
             [clojure.tools.logging :as log]))
 
+(defmacro dlet [bindings & body]
+  `(let [~@(mapcat (fn [[n v]]
+                     (if (or (vector? n) (map? n))
+                       [n v]
+                       [n v '_ `(println (name '~n) ":" ~v)]))
+                   (partition 2 bindings))]
+     ~@body))
+
 (defmacro def-
   "Private var definition macro"
   [item value]
